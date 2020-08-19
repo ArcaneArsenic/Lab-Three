@@ -2,6 +2,7 @@
  * Author: Rod Howell
  */
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,25 +19,48 @@ namespace Ksu.Cis300.TextEditor
     /// </summary>
     public partial class UserInterface : Form
     {
+        string fileName;
+        Exception error;
         /// <summary>
         /// Constructs the GUI.
         /// </summary>
         public UserInterface()
         {
             InitializeComponent();
+            fileName = "";
+           // error = null;
+        }
+
+        /// <summary>
+        /// displays an error message
+        /// </summary>
+        /// <param name="ex"></param>
+        private void errorHandler(Exception ex)
+        {
+            error = ex.InnerException;
+            ex = error;
+            MessageBox.Show("The following error occured: " + ex);
         }
 
         /// <summary>
         /// Handles a Click event on the "Open . . ." file menu item.
+        /// display file contents in text box
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void uxOpen_Click(object sender, EventArgs e)
         {
-            if (uxOpenDialog.ShowDialog() == DialogResult.OK)
+            try
             {
-                MessageBox.Show("Can't open file " + uxOpenDialog.FileName);
+                if (uxOpenDialog.ShowDialog() == DialogResult.OK)
+                {
+                    File.ReadAllText(fileName);
+                    uxEditBuffer.Text = fileName;
+                }
             }
+            catch { errorHandler(error); }
+         
+            
         }
 
         /// <summary>
@@ -46,10 +70,16 @@ namespace Ksu.Cis300.TextEditor
         /// <param name="e"></param>
         private void uxSaveAs_Click(object sender, EventArgs e)
         {
-            if (uxSaveDialog.ShowDialog() == DialogResult.OK)
+            try
             {
-                MessageBox.Show("Can't save file " + uxSaveDialog.FileName);
+                if (uxSaveDialog.ShowDialog() == DialogResult.OK)
+                {
+                    File.ReadAllText(fileName);
+                    fileName.Replace("",uxEditBuffer.Text);
+                }
             }
+            catch { errorHandler(error); }
         }
+        
     }
 }
