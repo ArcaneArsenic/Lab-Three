@@ -37,9 +37,8 @@ namespace Ksu.Cis300.TextEditor
         /// <param name="ex"></param>
         private void errorHandler(Exception ex)
         {
-            error = ex.InnerException;
-            ex = error;
-            MessageBox.Show("The following error occured: " + ex);
+            error = ex;
+            MessageBox.Show("The following error occured: " + Convert.ToString(error.InnerException));
         }
 
         /// <summary>
