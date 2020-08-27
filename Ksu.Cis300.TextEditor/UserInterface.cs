@@ -42,7 +42,7 @@ namespace Ksu.Cis300.TextEditor
         }
 
         /// <summary>
-        /// Handles a Click event on the "Open . . ." file menu item.
+        /// Handles a Click event on the "Open . . ." file menu item.g
         /// display file contents in text box
         /// </summary>
         /// <param name="sender"></param>
